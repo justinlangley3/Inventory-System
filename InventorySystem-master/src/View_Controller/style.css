@@ -1,0 +1,5 @@
+#disabled {
+    -fx-font-weight: bold;
+    -fx-background-color: #cccccc;
+    -fx-text-inner-color: #333333;
+}

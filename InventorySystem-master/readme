@@ -1,0 +1,119 @@
+
+Some quick notes about this application and its behavior
+
+	1. The GUI:
+
+		- Fields were given default (prompt) text
+
+		  	a. To inform the user what valid input might look like
+
+		- Form validation elements were added
+
+		  	a. To make the program feel more responsive
+		  	b. To give the user context for form fields
+		  	c. To notify the user of input errors before they attempt a save
+		  	d. To provide field highlighting when input is valid
+
+		- The save buttons are bounded
+
+		  	a. To disable the save button altogether if required inputs are not complete
+		  	b. To avoid displaying an additional dialog to the user, if required inputs are not complete
+		  	c. Since validation elements provide clues as to why the save button may be disabled
+		
+		- Minor beautification
+
+	2. The Program Logic:
+		
+		- Helper classes were added (found in the Helper package)
+
+			a. DialogHelper
+				- Provides a way to display a dialog throughout program views
+				- Provides functionality for displaying preset dialogs
+				- Tidies up controller code
+				* Provides only functions that do not alter saved inventory data
+
+			b. ValidationHelper
+				- Implements form validation as documented above
+				- Can be used to validate fields throughout program views
+				- Also includes a method to parse an input as currency (if bad input is given, it converts it to a non-error yielding value)
+				* Provides only functions that do not alter saved inventory data
+
+			c. SearchHelper
+				- Provides more robust searching of parts/products
+				- Functions which can be used across views to search inventory data
+				* Provides only functions that do not alter saved inventory data
+				* Hides search logic and provides only two public functions for searching parts and products
+				* More details in section 3
+
+		- Base Logic Remains the Same:
+			
+			a. Everything in the Model folder matches the UML diagram
+
+	3. Searching:
+
+		- Relies on binary search as the underlying method of searching part/product data elements
+
+		- Searches are case insensitive and ignore symbols (except for prices)
+
+		- Provides user with more search customization
+
+			a. Searches can be prefixed with modifiers for a specific search
+				i.   id:    informs the program the search is for a part/product ID
+				ii.  name:  informs the program the search is for a part/product name
+				iii. inv:   informs the program the search is for a part/product inventory amount
+				iv.  price: informs the program the search is for a part/product price
+
+			b. Searches can be done without prefixes
+				i.  Default search order:
+					- If an integer is entered, a part/product id search is assumed
+					- If a search contains any alphanumeric values, a part/product name is assumed
+					- If a currency or decimal value is entered a part/product price search is assumed
+					- Without the inv: prefix, a part/product inventory level cannot be search
+				ii. Additionally useful information
+					- an integer can be used as a price search with the price: prefix
+					- an integer can be used as a name search with the name: prefix
+					- a price can be searched without a prefix if a decimal exists
+					- if invalid values are given to a prefixed search, it will be ignored
+						e.g. (price: 123...123.4.,) will not be searched, the dialog will say a result was not found
+
+Project File Structure:
+	
+src/
+├── Application/
+│   ├── Main.java
+├── Helpers/
+│   ├── DialogHelper.java
+│   └── SearchHelper.java
+│   └── ValidationHelper.java
+├── Images/
+│   └── Icon.png
+├── Model/
+│   └── Inventory.java
+│   └── Part.java
+│   └── PartInHouse.java
+│   └── PartOutsourced.java
+│   └── Product.java
+└── View_Controller/
+    └── AddPartController.java
+    └── AddProductController.java
+    └── FXMLAddPart.fxml
+    └── FXMLAddProduct.fxml
+    └── FXMLMain.fxml
+    └── FXMLModifyPart.fxml
+    └── FXMLModifyProduct.fxml
+    └── MainController.java
+    └── ModifyPartController.java
+    └── ModifyProductController.java
+    └── Style.css
+	
+	
+	
+
+
+
+
+
+
+
+
+				
